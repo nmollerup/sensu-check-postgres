@@ -120,7 +120,6 @@ func executeCheck(event *corev2.Event) (int, error) {
 	}
 
 	dataSourceName = fmt.Sprintf("postgres://%s:%s@%s:%d/%s?sslmode=%s", dbUser, dbPass, plugin.Hostname, plugin.Port, plugin.Database, plugin.Sslmode)
-	fmt.Print(dataSourceName)
 	db, err := pgx.Connect(context.Background(), dataSourceName)
 	if err != nil {
 		return sensu.CheckStateCritical, fmt.Errorf("error connecting to postgres: %v", err)
