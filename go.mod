@@ -4,7 +4,7 @@ go 1.22.2
 
 require (
 	github.com/jackc/pgpassfile v1.0.0
-	github.com/jackc/pgx/v5 v5.7.2
+	github.com/jackc/pgx/v5 v5.7.3
 	github.com/sensu/sensu-go/api/core/v2 v2.14.0
 	github.com/sensu/sensu-plugin-sdk v0.16.0
 )
