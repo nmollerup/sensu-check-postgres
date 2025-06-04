@@ -103,6 +103,12 @@ func checkArgs(event *corev2.Event) (int, error) {
 	return sensu.CheckStateOK, nil
 }
 
+func Check(f func() error) {
+	if err := f(); err != nil {
+		fmt.Println("Database closure failed:", err)
+	}
+}
+
 func executeCheck(event *corev2.Event) (int, error) {
 	var dataSourceName string
 
@@ -124,7 +130,10 @@ func executeCheck(event *corev2.Event) (int, error) {
 	if err != nil {
 		return sensu.CheckStateCritical, fmt.Errorf("error connecting to postgres: %v", err)
 	}
-	defer db.Close(context.Background())
+
+	defer func() {
+		_ = db.Close(context.Background())
+	}()
 
 	err = db.Ping(context.Background())
 	if err != nil {

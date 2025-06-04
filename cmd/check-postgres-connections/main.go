@@ -156,7 +156,9 @@ func executeCheck(event *corev2.Event) (int, error) {
 	if err != nil {
 		return sensu.CheckStateCritical, fmt.Errorf("error connecting to postgres: %v", err)
 	}
-	defer db.Close(context.Background())
+	defer func() {
+		_ = db.Close(context.Background())
+	}()
 
 	err = db.Ping(context.Background())
 	if err != nil {
