@@ -6,6 +6,7 @@ import (
 	"os"
 	"strconv"
 
+	"github.com/dariubs/percent"
 	"github.com/jackc/pgpassfile"
 	"github.com/jackc/pgx/v5"
 	corev2 "github.com/sensu/sensu-go/api/core/v2"
@@ -29,8 +30,8 @@ type Config struct {
 var (
 	plugin = Config{
 		PluginConfig: sensu.PluginConfig{
-			Name:     "check-postgres-alive",
-			Short:    "postgres alive check",
+			Name:     "check-postgres-connections",
+			Short:    "postgres connections check",
 			Keyspace: "",
 		},
 	}
@@ -102,6 +103,13 @@ var (
 			Usage:     "Critical threshold number or % of connections. (default: 250 connections)",
 			Default:   250,
 			Value:     &plugin.Critical,
+		},
+		&sensu.PluginConfigOption[bool]{
+			Path:     "percentage",
+			Argument: "percentage",
+			Usage:    "Use percentage of defined max connections instead of absolute value",
+			Value:    &plugin.Percentage,
+			Default:  false,
 		},
 	}
 )
@@ -180,13 +188,25 @@ func executeCheck(event *corev2.Event) (int, error) {
 	superuser_reserved_connections_i, _ := strconv.Atoi(superuser_reserved_connections)
 	available_connections := max_connections_i - superuser_reserved_connections_i
 
-	if current_connections >= plugin.Warning {
-		return sensu.CheckStateWarning, fmt.Errorf("warning: postgres connections at %d out of %d connections", current_connections, available_connections)
-	}
-	if current_connections >= plugin.Critical {
-		return sensu.CheckStateCritical, fmt.Errorf("critical: postgres connections at %d out of %d connections", current_connections, available_connections)
+	if plugin.Percentage {
+		percentage := percent.PercentOf(current_connections, max_connections_i)
+		if percentage >= float64(plugin.Critical) {
+			return sensu.CheckStateCritical, fmt.Errorf("critical: postgres connections at %.2f%% out of %d connections", percentage, max_connections_i)
+		}
+		if percentage >= float64(plugin.Warning) {
+			return sensu.CheckStateWarning, fmt.Errorf("warning: postgres connections at %.2f%% out of %d connections", percentage, max_connections_i)
+		}
+		fmt.Printf("postgres connections at %.2f%% out of %d connections.", percentage, available_connections)
+
+	} else if !plugin.Percentage {
+		if current_connections >= plugin.Critical {
+			return sensu.CheckStateCritical, fmt.Errorf("critical: postgres connections at %d out of %d connections", current_connections, available_connections)
+		}
+		if current_connections >= plugin.Warning {
+			return sensu.CheckStateWarning, fmt.Errorf("warning: postgres connections at %d out of %d connections", current_connections, available_connections)
+		}
+		fmt.Printf("postgres connections at %d out of %d connections.", current_connections, available_connections)
 	}
 
-	fmt.Printf("postgres connections at %d out of %d connections.", current_connections, available_connections)
 	return sensu.CheckStateOK, nil
 }
