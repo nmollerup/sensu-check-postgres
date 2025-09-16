@@ -5,7 +5,7 @@ go 1.24.2
 require (
 	github.com/dariubs/percent v1.0.0
 	github.com/jackc/pgpassfile v1.0.0
-	github.com/jackc/pgx/v5 v5.7.5
+	github.com/jackc/pgx/v5 v5.7.6
 	github.com/sensu/sensu-go/api/core/v2 v2.14.0
 	github.com/sensu/sensu-plugin-sdk v0.16.0
 )
