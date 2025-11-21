@@ -7,7 +7,7 @@ require (
 	github.com/jackc/pgpassfile v1.0.0
 	github.com/jackc/pgx/v5 v5.7.6
 	github.com/sensu/sensu-go/api/core/v2 v2.14.0
-	github.com/sensu/sensu-plugin-sdk v0.16.0
+	github.com/sensu/sensu-plugin-sdk v0.19.0
 )
 
 require (
@@ -29,8 +29,9 @@ require (
 	github.com/robertkrimen/otto v0.0.0-20221006114523-201ab5b34f52 // indirect
 	github.com/robfig/cron/v3 v3.0.1 // indirect
 	github.com/rogpeppe/go-internal v1.13.1 // indirect
-	github.com/sensu/sensu-go/types v0.10.0 // indirect
-	github.com/sensu/sensu-licensing v0.1.2 // indirect
+	github.com/sensu/core/v2 v2.16.1 // indirect
+	github.com/sensu/sensu-api-tools v0.1.0 // indirect
+	github.com/sensu/sensu-licensing/v2 v2.2.1 // indirect
 	github.com/sirupsen/logrus v1.9.0 // indirect
 	github.com/spf13/afero v1.1.2 // indirect
 	github.com/spf13/cast v1.3.0 // indirect
