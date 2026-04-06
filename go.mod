@@ -1,11 +1,11 @@
 module nmollerup/sensu-check-postgres
 
-go 1.24.2
+go 1.25.0
 
 require (
 	github.com/dariubs/percent v1.0.0
 	github.com/jackc/pgpassfile v1.0.0
-	github.com/jackc/pgx/v5 v5.8.0
+	github.com/jackc/pgx/v5 v5.9.1
 	github.com/sensu/sensu-go/api/core/v2 v2.14.0
 	github.com/sensu/sensu-plugin-sdk v0.16.0
 )
