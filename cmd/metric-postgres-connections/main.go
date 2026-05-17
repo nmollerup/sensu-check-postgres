@@ -190,9 +190,10 @@ func executeMetric(_ *corev2.Event) error {
 		if err != nil {
 			return fmt.Errorf("error scanning row: %v", err)
 		}
-		if isWaiting == "t" {
+		switch isWaiting {
+		case "t":
 			waiting = count
-		} else if isWaiting == "f" {
+		case "f":
 			active = count
 		}
 	}

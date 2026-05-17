@@ -220,7 +220,7 @@ func executeCheck(event *corev2.Event) (int, error) {
 	segSize, _ := strconv.ParseInt(sizeStr, 10, 64)
 	segBytes := segSize << 20 // Convert MB to bytes
 
-	connMaster.Close(ctx)
+	_ = connMaster.Close(ctx)
 
 	// Connect to slave
 	slaveDSN := fmt.Sprintf("postgres://%s:%s@%s:%d/%s?sslmode=%s&connect_timeout=%d",
@@ -251,7 +251,7 @@ func executeCheck(event *corev2.Event) (int, error) {
 		return sensu.CheckStateCritical, fmt.Errorf("error querying slave WAL position: %v", err)
 	}
 
-	connSlave.Close(ctx)
+	_ = connSlave.Close(ctx)
 
 	// Calculate lag
 	lag, err := pgutil.ComputeLag(master, slave, segBytes)
