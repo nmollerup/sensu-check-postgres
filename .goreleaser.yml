@@ -1,25 +1,13 @@
+version: 2
+
 project_name: "sensu-check-postgres"
 builds:
-  # List of builds
   - main: ./cmd/check-postgres-alive/main.go
     id: "check-postgres-alive"
     env:
-    - CGO_ENABLED=0
+      - CGO_ENABLED=0
     ldflags: '-s -w -X github.com/sensu-community/sensu-plugin-sdk/version.version={{.Version}} -X github.com/sensu-community/sensu-plugin-sdk/version.commit={{.Commit}} -X github.com/sensu-community/sensu-plugin-sdk/version.date={{.Date}}'
-    # Set the binary output location to bin/ so archive will comply with Sensu Go Asset structure
     binary: bin/check-postgres-alive
-    goos:
-      - linux
-      - windows
-    goarch:
-      - amd64
-      - 386
-      - arm
-      - arm64
-    goarm:
-      - 5
-      - 6
-      - 7
     targets:
       - linux_386
       - linux_amd64
@@ -33,22 +21,9 @@ builds:
   - main: ./cmd/check-postgres-connections/main.go
     id: "check-postgres-connections"
     env:
-    - CGO_ENABLED=0
+      - CGO_ENABLED=0
     ldflags: '-s -w -X github.com/sensu-community/sensu-plugin-sdk/version.version={{.Version}} -X github.com/sensu-community/sensu-plugin-sdk/version.commit={{.Commit}} -X github.com/sensu-community/sensu-plugin-sdk/version.date={{.Date}}'
-    # Set the binary output location to bin/ so archive will comply with Sensu Go Asset structure
     binary: bin/check-postgres-connections
-    goos:
-      - linux
-      - windows
-    goarch:
-      - amd64
-      - 386
-      - arm
-      - arm64
-    goarm:
-      - 5
-      - 6
-      - 7
     targets:
       - linux_386
       - linux_amd64
@@ -59,6 +34,117 @@ builds:
       - windows_386
       - windows_amd64
 
+  - main: ./cmd/metric-postgres-statsbgwriter/main.go
+    id: "metric-postgres-statsbgwriter"
+    env:
+      - CGO_ENABLED=0
+    ldflags: '-s -w -X github.com/sensu-community/sensu-plugin-sdk/version.version={{.Version}} -X github.com/sensu-community/sensu-plugin-sdk/version.commit={{.Commit}} -X github.com/sensu-community/sensu-plugin-sdk/version.date={{.Date}}'
+    binary: bin/metric-postgres-statsbgwriter
+    targets:
+      - linux_386
+      - linux_amd64
+      - linux_arm_5
+      - linux_arm_6
+      - linux_arm_7
+      - linux_arm64
+      - windows_386
+      - windows_amd64
+
+  - main: ./cmd/metric-postgres-statsdb/main.go
+    id: "metric-postgres-statsdb"
+    env:
+      - CGO_ENABLED=0
+    ldflags: '-s -w -X github.com/sensu-community/sensu-plugin-sdk/version.version={{.Version}} -X github.com/sensu-community/sensu-plugin-sdk/version.commit={{.Commit}} -X github.com/sensu-community/sensu-plugin-sdk/version.date={{.Date}}'
+    binary: bin/metric-postgres-statsdb
+    targets:
+      - linux_386
+      - linux_amd64
+      - linux_arm_5
+      - linux_arm_6
+      - linux_arm_7
+      - linux_arm64
+      - windows_386
+      - windows_amd64
+
+  - main: ./cmd/metric-postgres-statsio/main.go
+    id: "metric-postgres-statsio"
+    env:
+      - CGO_ENABLED=0
+    ldflags: '-s -w -X github.com/sensu-community/sensu-plugin-sdk/version.version={{.Version}} -X github.com/sensu-community/sensu-plugin-sdk/version.commit={{.Commit}} -X github.com/sensu-community/sensu-plugin-sdk/version.date={{.Date}}'
+    binary: bin/metric-postgres-statsio
+    targets:
+      - linux_386
+      - linux_amd64
+      - linux_arm_5
+      - linux_arm_6
+      - linux_arm_7
+      - linux_arm64
+      - windows_386
+      - windows_amd64
+
+  - main: ./cmd/metric-postgres-statstable/main.go
+    id: "metric-postgres-statstable"
+    env:
+      - CGO_ENABLED=0
+    ldflags: '-s -w -X github.com/sensu-community/sensu-plugin-sdk/version.version={{.Version}} -X github.com/sensu-community/sensu-plugin-sdk/version.commit={{.Commit}} -X github.com/sensu-community/sensu-plugin-sdk/version.date={{.Date}}'
+    binary: bin/metric-postgres-statstable
+    targets:
+      - linux_386
+      - linux_amd64
+      - linux_arm_5
+      - linux_arm_6
+      - linux_arm_7
+      - linux_arm64
+      - windows_386
+      - windows_amd64
+
+  - main: ./cmd/metric-postgres-graphite/main.go
+    id: "metric-postgres-graphite"
+    env:
+      - CGO_ENABLED=0
+    ldflags: '-s -w -X github.com/sensu-community/sensu-plugin-sdk/version.version={{.Version}} -X github.com/sensu-community/sensu-plugin-sdk/version.commit={{.Commit}} -X github.com/sensu-community/sensu-plugin-sdk/version.date={{.Date}}'
+    binary: bin/metric-postgres-graphite
+    targets:
+      - linux_386
+      - linux_amd64
+      - linux_arm_5
+      - linux_arm_6
+      - linux_arm_7
+      - linux_arm64
+      - windows_386
+      - windows_amd64
+
+  - main: ./cmd/metric-postgres-relation-size/main.go
+    id: "metric-postgres-relation-size"
+    env:
+      - CGO_ENABLED=0
+    ldflags: '-s -w -X github.com/sensu-community/sensu-plugin-sdk/version.version={{.Version}} -X github.com/sensu-community/sensu-plugin-sdk/version.commit={{.Commit}} -X github.com/sensu-community/sensu-plugin-sdk/version.date={{.Date}}'
+    binary: bin/metric-postgres-relation-size
+    targets:
+      - linux_386
+      - linux_amd64
+      - linux_arm_5
+      - linux_arm_6
+      - linux_arm_7
+      - linux_arm64
+      - windows_386
+      - windows_amd64
+
+  - main: ./cmd/metrics-postgres-query/main.go
+    id: "metrics-postgres-query"
+    env:
+      - CGO_ENABLED=0
+    ldflags: '-s -w -X github.com/sensu-community/sensu-plugin-sdk/version.version={{.Version}} -X github.com/sensu-community/sensu-plugin-sdk/version.commit={{.Commit}} -X github.com/sensu-community/sensu-plugin-sdk/version.date={{.Date}}'
+    binary: bin/metrics-postgres-query
+    targets:
+      - linux_386
+      - linux_amd64
+      - linux_arm_5
+      - linux_arm_6
+      - linux_arm_7
+      - linux_arm64
+      - windows_386
+      - windows_amd64
 
 checksum:
   name_template: "{{ .ProjectName }}_{{ .Version }}_sha512-checksums.txt"
