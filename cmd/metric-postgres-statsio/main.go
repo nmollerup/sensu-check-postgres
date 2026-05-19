@@ -171,10 +171,10 @@ func executeMetric(_ *corev2.Event) error {
 	}()
 
 	query := fmt.Sprintf(`SELECT
-		sum(heap_blks_read) AS heap_blks_read, sum(heap_blks_hit) AS heap_blks_hit,
-		sum(idx_blks_read) AS idx_blks_read, sum(idx_blks_hit) AS idx_blks_hit,
-		sum(toast_blks_read) AS toast_blks_read, sum(toast_blks_hit) AS toast_blks_hit,
-		sum(tidx_blks_read) AS tidx_blks_read, sum(tidx_blks_hit) AS tidx_blks_hit
+		COALESCE(sum(heap_blks_read), 0) AS heap_blks_read, COALESCE(sum(heap_blks_hit), 0) AS heap_blks_hit,
+		COALESCE(sum(idx_blks_read), 0) AS idx_blks_read, COALESCE(sum(idx_blks_hit), 0) AS idx_blks_hit,
+		COALESCE(sum(toast_blks_read), 0) AS toast_blks_read, COALESCE(sum(toast_blks_hit), 0) AS toast_blks_hit,
+		COALESCE(sum(tidx_blks_read), 0) AS tidx_blks_read, COALESCE(sum(tidx_blks_hit), 0) AS tidx_blks_hit
 		FROM pg_statio_%s_tables`, plugin.Scope)
 
 	var heapBlksRead, heapBlksHit, idxBlksRead, idxBlksHit int64

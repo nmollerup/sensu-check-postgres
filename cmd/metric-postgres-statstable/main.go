@@ -171,10 +171,10 @@ func executeMetric(_ *corev2.Event) error {
 	}()
 
 	query := fmt.Sprintf(`SELECT
-		sum(seq_scan) AS seq_scan, sum(seq_tup_read) AS seq_tup_read,
-		sum(idx_scan) AS idx_scan, sum(idx_tup_fetch) AS idx_tup_fetch,
-		sum(n_tup_ins) AS n_tup_ins, sum(n_tup_upd) AS n_tup_upd, sum(n_tup_del) AS n_tup_del,
-		sum(n_tup_hot_upd) AS n_tup_hot_upd, sum(n_live_tup) AS n_live_tup, sum(n_dead_tup) AS n_dead_tup
+		COALESCE(sum(seq_scan), 0) AS seq_scan, COALESCE(sum(seq_tup_read), 0) AS seq_tup_read,
+		COALESCE(sum(idx_scan), 0) AS idx_scan, COALESCE(sum(idx_tup_fetch), 0) AS idx_tup_fetch,
+		COALESCE(sum(n_tup_ins), 0) AS n_tup_ins, COALESCE(sum(n_tup_upd), 0) AS n_tup_upd, COALESCE(sum(n_tup_del), 0) AS n_tup_del,
+		COALESCE(sum(n_tup_hot_upd), 0) AS n_tup_hot_upd, COALESCE(sum(n_live_tup), 0) AS n_live_tup, COALESCE(sum(n_dead_tup), 0) AS n_dead_tup
 		FROM pg_stat_%s_tables`, plugin.Scope)
 
 	var seqScan, seqTupRead, idxScan, idxTupFetch int64
